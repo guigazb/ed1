@@ -107,6 +107,28 @@ int sllInsertAsLast(Sllist* lista,void* data){
     return false;
 }
 
+void *sllRemovelast( Sllist *lista){
+    if(lista != NULL){
+        Sllnode* del;
+        Sllnode* beforedel;
+        void* data;
+        if(lista->first == NULL){
+            return NULL;
+        }else{
+            del = lista->first;
+            while(del->next != NULL){
+                beforedel = del;
+                del = del->next;
+            }
+            beforedel->next = NULL;
+            data = del->data;
+            free(del);
+        }
+         return data;
+    }
+    return NULL;
+}
+
 void* sllGetLast (Sllist* lista){
     if(lista != NULL){
         Sllnode* last;

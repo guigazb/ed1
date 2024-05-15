@@ -42,6 +42,11 @@ int sllInsertAsLast(Sllist* lista,void* data);
 Pre-condição: (l foi criada por sllCreate) && (data != NULL)
 Pos-condição: retorna se foi possivel inserir o item ou não */
 
+void *sllRemovelast( Sllist *lista); 
+/* Retira o elemento no final da lista
+Pre-condição: (l foi criada por sllCreate) && (existe pelo menos um item na lista)
+Pos-condição: elemento do final da lista foi removido */
+
 void* sllGetLast (Sllist* lista);
 /* retorna o ultimo elemento da lista
 Pre-condição: (l foi criada por sllCreate)
