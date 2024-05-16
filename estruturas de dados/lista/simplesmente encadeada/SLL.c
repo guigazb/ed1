@@ -83,7 +83,7 @@ void *sllGetfirst( Sllist *lista){
     return NULL;
 }
 
-// os métodos que buscam o ultimo elemento não são práticos, pois eles percorrem a lista inteira para descobrir o ultimo elemento
+// os métodos que buscam o ultimo elemento não são muito práticos, pois eles percorrem a lista inteira para descobrir o ultimo elemento
 
 int sllInsertAsLast(Sllist* lista,void* data){
     if(lista != NULL){
@@ -164,6 +164,83 @@ int sllNumNodes(Sllist* lista){
          return num;
     }
     return -1;
+}
+
+int sllInsertafterN(Sllist* lista, void* data,int n){
+    if(lista != NULL && data != NULL){
+        Sllnode* newnode = (Sllnode*)malloc(sizeof(Sllnode));
+        if(newnode != NULL){
+            Sllnode* aux = lista->first;
+            Sllnode* afteraux;
+            newnode->data = data;
+            newnode->next = NULL;
+            for(int i = 0; i<n ; i++){
+                aux = aux->next;
+            }
+            afteraux = aux->next;
+            aux->next = newnode;
+            newnode->next = afteraux;
+            free(aux);
+            return true;
+        }
+    }
+    return false;
+}
+
+int sllInsertafterepec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
+    if(lista != NULL && data != NULL){
+        Sllnode* newnode = (Sllnode*)malloc(sizeof(Sllnode));
+        if(newnode != NULL){
+            Sllnode* aux = lista->first;
+            Sllnode* afteraux;
+            newnode->data = data;
+            newnode->next = NULL;
+            while(cmp(data,(void*)&aux->data) == false){
+                aux = aux->next;
+            }
+            afteraux = aux->next;
+            aux->next = newnode;
+            newnode->next = afteraux;
+            free(aux);
+            return true;
+        }
+    }
+    return false;
+}
+
+int sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*)){
+    if(lista != NULL && key != NULL){
+        Sllnode* aux = lista->first;
+        while(cmp(key,(void*)&aux->data) == false){
+            aux = aux->next;
+            if(cmp(sllGetlast(lista),(void*)&aux->data) == true && cmp(key,(void*)&aux->data) == false){
+                return false;
+            }
+        }
+        free(aux);
+        return true;  
+    }
+    return false;
+}
+
+void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
+    if(lista != NULL && key != NULL){
+        Sllnode* del = lista->first;
+        Sllnode* beforedel;
+        void* salvo;
+        while(cmp(key,(void*)&del->data) == false){
+            beforedel = del;
+            del = del->next;
+            if(cmp(sllGetlast(lista),(void*)&del->data) == true && cmp(key,(void*)&del->data) == false){
+                return NULL;
+            }
+        }
+        beforedel = del->next;
+        salvo = del->data;
+        free(del);
+        return salvo;  
+    }
+    return NULL;
 }
 
 int sllDestroy (Sllist *lista){

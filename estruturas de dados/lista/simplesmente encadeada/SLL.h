@@ -57,6 +57,26 @@ int sllNumNodes(Sllist* lista);
 Pre-condição: (l foi criada por sllCreate)
 Pos-condição: retorna o numero de elementos na lista, código de erro se a lista não existir */
 
+int sllInsertafterN(Sllist* lista, void* data, int n);
+/* insere um elemento após N itens da lista
+Pre-condição: (l foi criada por sllCreate) && (l não está vazia)
+Pos-condição: elm foi inserido após n */
+
+int sllInsertafterepec(Sllist* lista,void* data,int(*cmp)(void*,void*));
+/* insere elm após item especificado
+Pre-condição: (l foi criada por sllCreate)
+Pos-condição: elm foi inserido após um item especificado */
+
+int sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*));
+/* retorna se o item especificado está na lista
+Pre-condição: (l foi criada por sllCreate)
+Pos-condição: retorna true se o item for encontrado */
+
+void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*));
+/* remove o elemento especificado
+Pre-condição: (l foi criada por sllCreate)
+Pos-condição: o elemento especificado foi removido */
+
 int sllDestroy (Sllist *lista);
 /* destroi a lista
 Pre-condição: (l foi criada por sllCreate) && (não existem itens na lista)
