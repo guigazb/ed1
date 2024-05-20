@@ -201,14 +201,15 @@ int sllInsertafterepec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
 int sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*)){
     if(lista != NULL && key != NULL){
         Sllnode* aux = lista->first;
-        while(cmp(key,(void*)&aux->data) == false){
+        stat = cmp(key,aux->data);
+        while(stat != true && aux->next != NULL){
             aux = aux->next;
-            if(cmp(sllGetlast(lista),(void*)&aux->data) == true && cmp(key,(void*)&aux->data) == false){
-                return false;
-            }
+            stat = cmp(key,aux->data);      
         }
-        
-        return true;  
+        if(stat == true){
+            return true;  
+        }
+         
     }
     return false;
 }
