@@ -111,9 +111,7 @@ void *sllRemovelast( Sllist *lista){
         Sllnode* del;
         Sllnode* beforedel;
         void* data;
-        if(lista->first == NULL){
-            return NULL;
-        }else{
+        if(lista->first != NULL){
             del = lista->first;
             while(del->next != NULL){
                 beforedel = del;
@@ -122,7 +120,7 @@ void *sllRemovelast( Sllist *lista){
             beforedel->next = NULL;
             data = del->data;
             free(del);
-        }
+        
          return data;
     }
     return NULL;
@@ -132,15 +130,12 @@ void* sllGetLast (Sllist* lista){
     if(lista != NULL){
         Sllnode* last;
         void* data;
-        if(lista->first == NULL){
-            return NULL;
-        }else{
+        if(lista->first != NULL){
             last = lista->first;
             while(last->next != NULL){
                 last = last->next;
             }
             data = last->data;
-        }
          return data;
     }
     return NULL;
@@ -150,16 +145,13 @@ int sllNumNodes(Sllist* lista){
     if(lista != NULL){
         Sllnode* last;
         int num;
-        if(lista->first == NULL){
-            return 0;
-        }else{
+        if(lista->first != NULL){
             last = lista->first;
             num++;
             while(last->next != NULL){
                 num++;
                 last = last->next;
             }  
-        }
          return num;
     }
     return -1;
@@ -223,6 +215,7 @@ int sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*)){
 
 void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
     if(lista != NULL && key != NULL){
+        if(lista->first != NULL){
         Sllnode* del = lista->first;
         Sllnode* beforedel;
         void* salvo;
@@ -237,6 +230,7 @@ void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
         salvo = del->data;
         free(del);
         return salvo;  
+    }
     }
     return NULL;
 }
