@@ -76,7 +76,6 @@ void *sllGetfirst( Sllist *lista){
         if(lista->first != NULL){
             salvo = lista->first;
             data = salvo->data;
-            free(salvo);
             return data;
         }
     }
@@ -180,7 +179,6 @@ int sllInsertafterN(Sllist* lista, void* data,int n){
             afteraux = aux->next;
             aux->next = newnode;
             newnode->next = afteraux;
-            free(aux);
             return true;
         }
     }
@@ -201,7 +199,7 @@ int sllInsertafterepec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
             afteraux = aux->next;
             aux->next = newnode;
             newnode->next = afteraux;
-            free(aux);
+        
             return true;
         }
     }
@@ -217,7 +215,7 @@ int sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*)){
                 return false;
             }
         }
-        free(aux);
+        
         return true;  
     }
     return false;
