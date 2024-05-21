@@ -37,6 +37,11 @@ void *sllGetfirst( Sllist *lista);
 Pre-condição: (l foi criado por sllCreate) && (existe pelo menos um item na lista)
 Pos-condição: o retorno é o item no inicio da lista */
 
+void *sllGetfirstcur( Sllist *lista);
+/* retorna o atual elemento no inicio da lista usando current
+Pre-condição: (l foi criado por sllCreate) && (existe pelo menos um item na lista)
+Pos-condição: o retorno é o item no inicio da lista */
+
 int sllInsertAsLast(Sllist* lista,void* data);
 /* insere data como ultimo elemento da lista
 Pre-condição: (l foi criada por sllCreate) && (data != NULL)
@@ -62,12 +67,17 @@ int sllInsertafterN(Sllist* lista, void* data, int n);
 Pre-condição: (l foi criada por sllCreate) && (l não está vazia)
 Pos-condição: elm foi inserido após n */
 
-int sllInsertafterepec(Sllist* lista,void* data,int(*cmp)(void*,void*));
+int sllInsertafterespec(Sllist* lista,void* data,int(*cmp)(void*,void*));
 /* insere elm após item especificado
 Pre-condição: (l foi criada por sllCreate)
 Pos-condição: elm foi inserido após um item especificado */
 
-int sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*));
+int sllInsertbeforespec(Sllist* lista,void* data,int(*cmp)(void*,void*));
+/* insere elm antes do item especificado
+Pre-condição: (l foi criada por sllCreate)
+Pos-condição: elm foi inserido antes de um item especificado */
+
+void* sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*));
 /* retorna se o item especificado está na lista
 Pre-condição: (l foi criada por sllCreate)
 Pos-condição: retorna true se o item for encontrado */
@@ -76,6 +86,11 @@ void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*));
 /* remove o elemento especificado
 Pre-condição: (l foi criada por sllCreate)
 Pos-condição: o elemento especificado foi removido */
+
+void* sllGetnext(Sllist* lista);
+/* retorna o elemento current da lista
+Pre-condição: (l foi criada por sllCreate)
+Pos-condição: retorna o current da lista */
 
 int sllDestroy (Sllist *lista);
 /* destroi a lista
