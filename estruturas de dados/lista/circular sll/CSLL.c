@@ -258,26 +258,28 @@ void* csllQueryspec(Csllist* cslista, void*key,int(*cmp)(void*,void*)){
 void* csllRemovespec(Csllist* cslista,void* key,int(*cmp)(void*,void*)){
     if(cslista != NULL && key != NULL){
         if(cslista->first != NULL){
-        Csllnode* del = cslista->first;
-        Csllnode* beforedel;
+        Csllnode* prev = cslista->first;
+        Csllnode* spec = prev->next;
         void* salvo;
-        int stat = cmp(key,del->data);
-        while(stat != true && del->next != NULL){
-            beforedel = del;
-            del = del->next;
-            stat = cmp(key,del->data);
+        int stat = cmp(key,spec->data);
+        while(stat != true && spec->next != NULL){
+            prev = spec;
+            spec = spec->next;
+            stat = cmp(key,spec->data);
         }
         if(stat == true){
-            salvo = del->data;
-            if(beforedel == NULL){
-                cslista->first = del->next;
-            }else{
-                beforedel->next = del->next;
+            prev->next = spec->next;
+            salvo = spec->data;
+            if(cslista->first == spec){
+                if(spec->next == spec){
+                    cslista->first = NULL;
+                }else{
+                    cslista->first = spec->next;
+                }
             }
-            free(del);
+            free(spec);
             return salvo; 
-        }
-        
+        } 
        }
     }
     return NULL;
