@@ -1,17 +1,18 @@
 /*-----------------------------------------------------------------------
-Sll.c
-arquivo com a implementação para o TAD lista simplesmente encadeada em ED 1 
+CSll.c
+arquivo com a implementação para o TAD lista circular simplesmente encadeada 
+em ED 1 
 professor: Anselmo Cardoso de Paiva
 -------------------------------------------------------------------------
 Aluno: Guilherme Barrio Nascimento
 maio/2024
 ------------------------------------------------------------------------*/
 
-#ifndef _SLL_C_
-#define _SLL_C_
+#ifndef _CSLL_C_
+#define _CSLL_C_
 
-/* Implementação do TAD lista */
-#include "Sll.h" /* inclui a especificacao do TAD */
+/* Implementação do TAD cslista */
+#include "CSll.h" /* inclui a especificacao do TAD */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,32 +20,32 @@ maio/2024
 #define true  1
 #define false 0
 
-typedef struct sllnode{
+typedef struct csllnode{
     void* data;
-    struct sllnode *next;
-}Sllnode;
+    struct csllnode *next;
+}Csllnode;
 
-typedef struct sllist{
-    Sllnode* first;
-    Sllnode* cur;
-}Sllist;
+typedef struct csllist{
+    Csllnode* first;
+    Csllnode* cur;
+}Csllist;
 
-Sllist *sllCreate (void){
-    Sllist* lista = (Sllist*)malloc(sizeof(Sllist));
-    if(lista != NULL){
-        lista->first = NULL;
-        return lista;
+Csllist *csllCreate (void){
+    Csllist* cslista = (Csllist*)malloc(sizeof(Csllist));
+    if(cslista != NULL){
+        cslista->first = NULL;
+        return cslista;
     }
     return NULL;
 }
 
-int sllInsertasfist( Sllist *lista, void *data){
-    if(lista != NULL){
-        Sllnode* newnode = (Sllnode*)malloc(sizeof(Sllnode));
+int csllInsertasfist( Csllist *cslista, void *data){
+    if(cslista != NULL){
+        Csllnode* newnode = (Csllnode*)malloc(sizeof(Csllnode));
         if(newnode != NULL){
             newnode->data = data;
-            newnode->next = lista->first; // = NULL
-            lista->first = newnode;
+            newnode->next = cslista->first; // = NULL
+            cslista->first = newnode;
             return true;
         } 
     }
@@ -52,16 +53,16 @@ int sllInsertasfist( Sllist *lista, void *data){
 }
 
 
-void *sllRemovefirst( Sllist *lista){
-    if(lista != NULL){
-        Sllnode* del;
-        Sllnode* afterdel;
+void *csllRemovefirst( Csllist *cslista){
+    if(cslista != NULL){
+        Csllnode* del;
+        Csllnode* afterdel;
         void* data;
-        if(lista->first != NULL){
-            del = lista->first;
+        if(cslista->first != NULL){
+            del = cslista->first;
             data = del->data;
             afterdel = del->next;
-            lista->first = afterdel;
+            cslista->first = afterdel;
             free(del);
             return data;
         }
@@ -70,12 +71,12 @@ void *sllRemovefirst( Sllist *lista){
 }
 
 
-void *sllGetfirst( Sllist *lista){
-    if(lista != NULL){
-        Sllnode* salvo;
+void *csllGetfirst( Csllist *cslista){
+    if(cslista != NULL){
+        Csllnode* salvo;
         void* data;
-        if(lista->first != NULL){
-            salvo = lista->first;
+        if(cslista->first != NULL){
+            salvo = cslista->first;
             data = salvo->data;
             return data;
         }
@@ -83,29 +84,27 @@ void *sllGetfirst( Sllist *lista){
     return NULL;
 }
 
-void *sllGetfirstcur( Sllist *lista){ // necessário para getnext funcionar
-    if(lista != NULL){
-        if(lista->first != NULL){
-            lista->cur = lista->first;
-            return lista->cur->data;
+void *csllGetfirstcur( Csllist *cslista){ // necessário para getnext funcionar
+    if(cslista != NULL){
+        if(cslista->first != NULL){
+            cslista->cur = cslista->first;
+            return cslista->cur->data;
         }
     }
     return NULL;
 }
 
-// os métodos que buscam o ultimo elemento não são muito práticos, pois eles percorrem a lista inteira para descobrir o ultimo elemento
-
-int sllInsertAsLast(Sllist* lista,void* data){
-    if(lista != NULL){
-        Sllnode* newnode = (Sllnode*)malloc(sizeof(Sllnode));
-        Sllnode* last;
+int csllInsertAsLast(Csllist* cslista,void* data){
+    if(cslista != NULL){
+        Csllnode* newnode = (Csllnode*)malloc(sizeof(Csllnode));
+        Csllnode* last;
         if(newnode != NULL){
             newnode->data = data;
             newnode->next = NULL;
-            if(lista->first == NULL){
-                lista->first = newnode;
+            if(cslista->first == NULL){
+                cslista->first = newnode;
             }else{
-                last = lista->first;
+                last = cslista->first;
                 while(last->next != NULL){
                     last = last->next;
                 }
@@ -117,13 +116,13 @@ int sllInsertAsLast(Sllist* lista,void* data){
     return false;
 }
 
-void *sllRemovelast( Sllist *lista){
-    if(lista != NULL){
-        Sllnode* del;
-        Sllnode* beforedel;
+void *csllRemovelast( Csllist *cslista){
+    if(cslista != NULL){
+        Csllnode* del;
+        Csllnode* beforedel;
         void* data;
-        if(lista->first != NULL){
-            del = lista->first;
+        if(cslista->first != NULL){
+            del = cslista->first;
             while(del->next != NULL){
                 beforedel = del;
                 del = del->next;
@@ -138,12 +137,12 @@ void *sllRemovelast( Sllist *lista){
     return NULL;
 }
 
-void* sllGetLast (Sllist* lista){
-    if(lista != NULL){
-        Sllnode* last;
+void* csllGetLast (Csllist* cslista){
+    if(cslista != NULL){
+        Csllnode* last;
         void* data;
-        if(lista->first != NULL){
-            last = lista->first;
+        if(cslista->first != NULL){
+            last = cslista->first;
             while(last->next != NULL){
                 last = last->next;
             }
@@ -154,12 +153,12 @@ void* sllGetLast (Sllist* lista){
     return NULL;
 }
 
-int sllNumNodes(Sllist* lista){
-    if(lista != NULL){
-        Sllnode* last;
+int csllNumNodes(Csllist* cslista){
+    if(cslista != NULL){
+        Csllnode* last;
         int num;
-        if(lista->first != NULL){
-            last = lista->first;
+        if(cslista->first != NULL){
+            last = cslista->first;
             num++;
             while(last->next != NULL){
                 num++;
@@ -171,12 +170,12 @@ int sllNumNodes(Sllist* lista){
     return -1;
 }
 
-int sllInsertafterN(Sllist* lista, void* data,int n){
-    if(lista != NULL && data != NULL){
-        Sllnode* newnode = (Sllnode*)malloc(sizeof(Sllnode));
+int csllInsertafterN(Csllist* cslista, void* data,int n){
+    if(cslista != NULL && data != NULL){
+        Csllnode* newnode = (Csllnode*)malloc(sizeof(Csllnode));
         if(newnode != NULL){
-            Sllnode* aux = lista->first;
-            Sllnode* afteraux;
+            Csllnode* aux = cslista->first;
+            Csllnode* afteraux;
             newnode->data = data;
             newnode->next = NULL;
             for(int i = 0; i<n ; i++){
@@ -191,12 +190,12 @@ int sllInsertafterN(Sllist* lista, void* data,int n){
     return false;
 }
 
-int sllInsertafterespec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
-    if(lista != NULL && data != NULL){
-        Sllnode* newnode = (Sllnode*)malloc(sizeof(Sllnode));
+int csllInsertafterespec(Csllist* cslista,void* data,int(*cmp)(void*,void*)){
+    if(cslista != NULL && data != NULL){
+        Csllnode* newnode = (Csllnode*)malloc(sizeof(Csllnode));
         if(newnode != NULL){
-            Sllnode* aux = lista->first;
-            Sllnode* afteraux;
+            Csllnode* aux = cslista->first;
+            Csllnode* afteraux;
             newnode->data = data;
             newnode->next = NULL;
             while(cmp(data,(void*)&aux->data) == false){
@@ -212,25 +211,25 @@ int sllInsertafterespec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
     return false;
 }
 
-int sllInsertbeforespec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
-    Sllnode *prev, *spec;
-    if ( lista != NULL) {
-        if ( lista->first != NULL) {
-            prev = NULL; spec = lista->first;
+int csllInsertbeforespec(Csllist* cslista,void* data,int(*cmp)(void*,void*)){
+    Csllnode *prev, *spec;
+    if ( cslista != NULL) {
+        if ( cslista->first != NULL) {
+            prev = NULL; spec = cslista->first;
             int stat = cmp(spec->data, data);
             while ( stat != true && spec->next != NULL) {
                 prev = spec; spec= spec->next;
                 stat = cmp (spec->data, data);
                 }
                 if ( stat == true) {
-                    Sllnode* newnode = (Sllnode *) malloc(sizeof(Sllnode));
+                    Csllnode* newnode = (Csllnode *) malloc(sizeof(Csllnode));
                     if ( newnode != NULL){
                         newnode->data = data;
                         newnode->next = spec;
                         if( prev != NULL) {
                         prev->next = newnode;
                         } else {
-                        lista->first = newnode;
+                        cslista->first = newnode;
                         }
                     }
             }
@@ -239,10 +238,10 @@ int sllInsertbeforespec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
     return true;
 }
 
-void* sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*)){
-    if(lista != NULL && key != NULL){
-        if(lista->first != NULL){
-            Sllnode* atual = lista->first;
+void* csllQueryspec(Csllist* cslista, void*key,int(*cmp)(void*,void*)){
+    if(cslista != NULL && key != NULL){
+        if(cslista->first != NULL){
+            Csllnode* atual = cslista->first;
             int stat = cmp(atual->data,key);
             while(stat != true && atual->next != NULL){
                 atual = atual->next;
@@ -256,11 +255,11 @@ void* sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*)){
     return NULL;
 }
 
-void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
-    if(lista != NULL && key != NULL){
-        if(lista->first != NULL){
-        Sllnode* del = lista->first;
-        Sllnode* beforedel;
+void* csllRemovespec(Csllist* cslista,void* key,int(*cmp)(void*,void*)){
+    if(cslista != NULL && key != NULL){
+        if(cslista->first != NULL){
+        Csllnode* del = cslista->first;
+        Csllnode* beforedel;
         void* salvo;
         int stat = cmp(key,del->data);
         while(stat != true && del->next != NULL){
@@ -271,7 +270,7 @@ void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
         if(stat == true){
             salvo = del->data;
             if(beforedel == NULL){
-                lista->first = del->next;
+                cslista->first = del->next;
             }else{
                 beforedel->next = del->next;
             }
@@ -284,24 +283,24 @@ void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
     return NULL;
 }
 
-void* sllGetnext(Sllist* lista){
-    if(lista != NULL){
-        if(lista->cur != NULL){
-            lista->cur = lista->cur->next;
-            return lista->cur->data;
+void* csllGetnext(Csllist* cslista){
+    if(cslista != NULL){
+        if(cslista->cur != NULL){
+            cslista->cur = cslista->cur->next;
+            return cslista->cur->data;
         }
     }
     return NULL;
 }
 
-int sllDestroy (Sllist *lista){
-    if(lista != NULL){
-        if(lista->first == NULL){
-            free(lista);
+int csllDestroy (Csllist *cslista){
+    if(cslista != NULL){
+        if(cslista->first == NULL){
+            free(cslista);
             return true;
         }
     }
     return false;
 }
 
-#endif /* __SLL_C */
+#endif /* __CSLL_C */
