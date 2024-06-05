@@ -62,12 +62,12 @@ int csllNumNodes(Csllist* cslista);
 Pre-condição: (l foi criada por sllCreate)
 Pos-condição: retorna o numero de elementos na lista, código de erro se a lista não existir */
 
-int csllInsertafterespec(Csllist* cslista,void* data,int(*cmp)(void*,void*));
+int csllInsertafterespec(Csllist* cslista,void* data,void* key,int(*cmp)(void*,void*));
 /* insere elm após item especificado
 Pre-condição: (l foi criada por sllCreate)
 Pos-condição: elm foi inserido após um item especificado */
 
-int csllInsertbeforespec(Csllist* cslista,void* data,int(*cmp)(void*,void*));
+int csllInsertbeforespec(Csllist* cslista,void* data,void* key,int(*cmp)(void*,void*));
 /* insere elm antes do item especificado
 Pre-condição: (l foi criada por sllCreate)
 Pos-condição: elm foi inserido antes de um item especificado */
