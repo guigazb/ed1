@@ -62,11 +62,6 @@ int csllNumNodes(Csllist* cslista);
 Pre-condição: (l foi criada por sllCreate)
 Pos-condição: retorna o numero de elementos na lista, código de erro se a lista não existir */
 
-int csllInsertafterN(Csllist* cslista, void* data, int n);
-/* insere um elemento após N itens da lista
-Pre-condição: (l foi criada por sllCreate) && (l não está vazia)
-Pos-condição: elm foi inserido após n */
-
 int csllInsertafterespec(Csllist* cslista,void* data,int(*cmp)(void*,void*));
 /* insere elm após item especificado
 Pre-condição: (l foi criada por sllCreate)

@@ -44,8 +44,8 @@ int csllInsertasfist( Csllist *cslista, void *data){
         Csllnode* newnode = (Csllnode*)malloc(sizeof(Csllnode));
         if(newnode != NULL){
             newnode->data = data;
-            newnode->next = cslista->first; // = NULL
             cslista->first = newnode;
+            newnode->next = cslista->first;
             return true;
         } 
     }
@@ -100,16 +100,16 @@ int csllInsertAsLast(Csllist* cslista,void* data){
         Csllnode* last;
         if(newnode != NULL){
             newnode->data = data;
-            newnode->next = NULL;
             if(cslista->first == NULL){
                 cslista->first = newnode;
             }else{
                 last = cslista->first;
-                while(last->next != NULL){
+                while(last->next != cslista->first){
                     last = last->next;
                 }
                 last->next = newnode;
             }
+            newnode->next = cslista->first;
             return true;
         }
     }
@@ -160,82 +160,67 @@ int csllNumNodes(Csllist* cslista){
         if(cslista->first != NULL){
             last = cslista->first;
             num++;
-            while(last->next != NULL){
+            while(last->next != cslista->first){
                 num++;
                 last = last->next;
             }  
          return num;
-    }
+        }
     }
     return -1;
 }
 
-int csllInsertafterN(Csllist* cslista, void* data,int n){
+int csllInsertafterespec(Csllist* cslista,void* data,void*key ,int(*cmp)(void*,void*)){
     if(cslista != NULL && data != NULL){
         Csllnode* newnode = (Csllnode*)malloc(sizeof(Csllnode));
         if(newnode != NULL){
-            Csllnode* aux = cslista->first;
-            Csllnode* afteraux;
+            Csllnode* prev = cslista->first;
+            Csllnode* spec = prev->next;
             newnode->data = data;
             newnode->next = NULL;
-            for(int i = 0; i<n ; i++){
-                aux = aux->next;
+            int stat = cmp(key,spec->data);
+            while(stat != true && spec != cslista->first){
+                prev = spec;
+                spec = spec->next;
+                stat = cmp(key,spec->data);
             }
-            afteraux = aux->next;
-            aux->next = newnode;
-            newnode->next = afteraux;
+            if(stat == true){
+                Csllnode* next = spec->next;
+                newnode->next = next;
+                spec->next = newnode;
+            }
             return true;
         }
     }
     return false;
 }
 
-int csllInsertafterespec(Csllist* cslista,void* data,int(*cmp)(void*,void*)){
-    if(cslista != NULL && data != NULL){
-        Csllnode* newnode = (Csllnode*)malloc(sizeof(Csllnode));
-        if(newnode != NULL){
-            Csllnode* aux = cslista->first;
-            Csllnode* afteraux;
-            newnode->data = data;
-            newnode->next = NULL;
-            while(cmp(data,(void*)&aux->data) == false){
-                aux = aux->next;
-            }
-            afteraux = aux->next;
-            aux->next = newnode;
-            newnode->next = afteraux;
-        
-            return true;
-        }
-    }
-    return false;
-}
-
-int csllInsertbeforespec(Csllist* cslista,void* data,int(*cmp)(void*,void*)){
-    Csllnode *prev, *spec;
+int csllInsertbeforespec(Csllist* cslista,void* data,void*key,int(*cmp)(void*,void*)){
     if ( cslista != NULL) {
         if ( cslista->first != NULL) {
-            prev = NULL; spec = cslista->first;
-            int stat = cmp(spec->data, data);
-            while ( stat != true && spec->next != NULL) {
-                prev = spec; spec= spec->next;
-                stat = cmp (spec->data, data);
-                }
-                if ( stat == true) {
-                    Csllnode* newnode = (Csllnode *) malloc(sizeof(Csllnode));
-                    if ( newnode != NULL){
-                        newnode->data = data;
-                        newnode->next = spec;
-                        if( prev != NULL) {
-                        prev->next = newnode;
-                        } else {
+            Csllnode *prev = cslista->first;
+            Csllnode *spec = prev->next;
+            int stat = cmp(spec->data,key);
+            while(stat != true && spec != cslista->first){
+                prev = spec; 
+                spec= spec->next;
+                stat = cmp(spec->data, key);
+            }
+            if(stat == true){
+                Csllnode* newnode = (Csllnode *) malloc(sizeof(Csllnode));
+                if(newnode != NULL){
+                    newnode->data = data;
+                    newnode->next = spec;
+                    if(spec == cslista->first){
                         cslista->first = newnode;
-                        }
                     }
+                    prev->next = newnode;
+                    return true;
+                }
             }
         }
     }
-    return true;
+    return false;
 }
 
 void* csllQueryspec(Csllist* cslista, void*key,int(*cmp)(void*,void*)){
@@ -262,7 +247,7 @@ void* csllRemovespec(Csllist* cslista,void* key,int(*cmp)(void*,void*)){
         Csllnode* spec = prev->next;
         void* salvo;
         int stat = cmp(key,spec->data);
-        while(stat != true && spec->next != NULL){
+        while(stat != true && spec != cslista->first){
             prev = spec;
             spec = spec->next;
             stat = cmp(key,spec->data);
