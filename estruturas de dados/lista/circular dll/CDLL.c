@@ -1,17 +1,18 @@
 /*-----------------------------------------------------------------------
-Dll.c
-arquivo com a implementação para o TAD dlista duplamente encadeada em ED 1 
+CDll.c
+arquivo com a implementação para o TAD lista circular duplamente encadeada
+em ED 1 
 professor: Anselmo Cardoso de Paiva
 -------------------------------------------------------------------------
 Aluno: Guilherme Barrio Nascimento
 maio/2024
 ------------------------------------------------------------------------*/
 
-#ifndef _DLL_C_
-#define _DLL_C_
+#ifndef _CDLL_C_
+#define _CDLL_C_
 
 /* Implementação do TAD dlista */
-#include "Dll.h" /* inclui a especificacao do TAD */
+#include "CDll.h" /* inclui a especificacao do TAD */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,38 +20,38 @@ maio/2024
 #define true  1
 #define false 0
 
-typedef struct dllnode{
+typedef struct cdllnode{
     void* data;
-    struct dllnode *next;
-    struct dllnode *prev;
-}Dllnode;
+    struct cdllnode *next;
+    struct cdllnode *prev;
+}Cdllnode;
 
-typedef struct dllist{
-    Dllnode* first;
-    Dllnode* cur;
-}Dllist;
+typedef struct cdllist{
+    Cdllnode* first;
+    Cdllnode* cur;
+}Cdllist;
 
-Dllist *dllCreate (void){
-    Dllist* dlista = (Dllist*)malloc(sizeof(Dllist));
-    if(dlista != NULL){
-        dlista->first = NULL;
-        dlista->cur = NULL;
-        return dlista;
+Cdllist *cdllCreate (void){
+    Cdllist* cdlista = (Cdllist*)malloc(sizeof(Cdllist));
+    if(cdlista != NULL){
+        cdlista->first = NULL;
+        cdlista->cur = NULL;
+        return cdlista;
     }
     return NULL;
 }
 
-int dllInsertasfist( Dllist *dlista, void *data){
-    if(dlista != NULL){
-        Dllnode* newnode = (Dllnode*)malloc(sizeof(Dllnode));
+int cdllInsertasfist( Cdllist *cdlista, void *data){
+    if(cdlista != NULL){
+        Cdllnode* newnode = (Cdllnode*)malloc(sizeof(Cdllnode));
         if(newnode != NULL){
             newnode->data = data;
-            newnode->next = dlista->first; // = NULL
-            newnode->prev = NULL;
-            if(dlista->first != NULL){
-                dlista->first->prev = newnode;
+            if(cdlista->first != NULL){
+                cdlista->first->prev = newnode;
             }
-            dlista->first = newnode;
+            cdlista->first = newnode;
+            newnode->next = cdlista->first;
+            newnode->prev = cdlista->first;
             return true;
         } 
     }
@@ -58,16 +59,16 @@ int dllInsertasfist( Dllist *dlista, void *data){
 }
 
 
-void *dllRemovefirst( Dllist *dlista){
-    if(dlista != NULL){
-        Dllnode* del;
-        Dllnode* afterdel;
+void* cdllRemovefirst( Cdllist *cdlista){
+    if(cdlista != NULL){
+        Cdllnode* del;
+        Cdllnode* afterdel;
         void* data;
-        if(dlista->first != NULL){
-            del = dlista->first;
+        if(cdlista->first != NULL){
+            del = cdlista->first;
             data = del->data;
             afterdel = del->next;
-            dlista->first = afterdel;
+            cdlista->first = afterdel;
             free(del);
             return data;
         }
@@ -76,25 +77,25 @@ void *dllRemovefirst( Dllist *dlista){
 }
 
 
-void *dllGetfirst( Dllist *dlista){ // necessário para getnext funcionar
-    if(dlista != NULL){
+void* cdllGetfirst( Cdllist *cdlista){ // necessário para getnext funcionar
+    if(cdlista != NULL){
         void* retorno;
-        if(dlista->first != NULL){
-            dlista->cur = dlista->first;
-            retorno = dlista->cur->data;
+        if(cdlista->first != NULL){
+            cdlista->cur = cdlista->first;
+            retorno = cdlista->cur->data;
             return retorno;
         }
     }
     return NULL;
 }
 
-void* dllGetnext(Dllist* dlista){
-    if(dlista != NULL){
+void* cdllGetnext(Cdllist* cdlista){
+    if(cdlista != NULL){
         void* retorno;
-        if(dlista->cur != NULL){
-            if(dlista->cur->next != NULL){
-                dlista->cur = dlista->cur->next;
-                retorno = dlista->cur->data;
+        if(cdlista->cur != NULL){
+            if(cdlista->cur->next != NULL){
+                cdlista->cur = cdlista->cur->next;
+                retorno = cdlista->cur->data;
                 return retorno;
             }
         }
@@ -102,19 +103,19 @@ void* dllGetnext(Dllist* dlista){
     return NULL;
 }
 
-// os métodos que buscam o ultimo elemento não são muito práticos, pois eles percorrem a dlista inteira para descobrir o ultimo elemento
+// os métodos que buscam o ultimo elemento não são muito práticos, pois eles percorrem a cdlista inteira para descobrir o ultimo elemento
 
-int dllInsertAsLast(Dllist* dlista,void* data){
-    if(dlista != NULL){
-        Dllnode* newnode = (Dllnode*)malloc(sizeof(Dllnode));
-        Dllnode* last;
+int cdllInsertAsLast(Cdllist* cdlista,void* data){
+    if(cdlista != NULL){
+        Cdllnode* newnode = (Cdllnode*)malloc(sizeof(Cdllnode));
+        Cdllnode* last;
         if(newnode != NULL){
             newnode->data = data;
             newnode->next = NULL;
-            if(dlista->first == NULL){
-                dlista->first = newnode;
+            if(cdlista->first == NULL){
+                cdlista->first = newnode;
             }else{
-                last = dlista->first;
+                last = cdlista->first;
                 while(last->next != NULL){
                     last = last->next;
                 }
@@ -126,16 +127,16 @@ int dllInsertAsLast(Dllist* dlista,void* data){
     return false;
 }
 
-void *dllRemovelast( Dllist *dlista){
-    if(dlista != NULL){
-        Dllnode* del;
-        Dllnode* beforedel;
+void* cdllRemovelast( Cdllist *cdlista){
+    if(cdlista != NULL){
+        Cdllnode* del;
+        Cdllnode* beforedel;
         void* data;
-        if(dlista->first != NULL){
-            del = dlista->first;
+        if(cdlista->first != NULL){
+            del = cdlista->first;
             if(del->next == NULL){
                 data = del->data;
-                dlista->first = NULL;
+                cdlista->first = NULL;
                 free(del);
                 return data; 
             }
@@ -153,12 +154,12 @@ void *dllRemovelast( Dllist *dlista){
 }
 
 
-int dllNumNodes(Dllist* dlista){
-    if(dlista != NULL){
-        Dllnode* last;
+int cdllNumNodes(Cdllist* cdlista){
+    if(cdlista != NULL){
+        Cdllnode* last;
         int num = 0;
-        if(dlista->first != NULL){
-            last = dlista->first;
+        if(cdlista->first != NULL){
+            last = cdlista->first;
             num++;
             while(last->next != NULL){
                 num++;
@@ -170,19 +171,19 @@ int dllNumNodes(Dllist* dlista){
     return -1;
 }
 
-int dllInsertafterespec(Dllist* dlista,void* data,void* key, int(*cmp)(void*,void*)){
-    if(dlista != NULL && data != NULL && key != NULL){
-        Dllnode* newnode = (Dllnode*)malloc(sizeof(Dllnode));
+int cdllInsertafterespec(Cdllist* cdlista,void* data,void* key, int(*cmp)(void*,void*)){
+    if(cdlista != NULL && data != NULL && key != NULL){
+        Cdllnode* newnode = (Cdllnode*)malloc(sizeof(Cdllnode));
         if(newnode != NULL){
-            if(dlista->first != NULL){
-                Dllnode* spec = dllGetspec(dlista,key,cmp);
+            if(cdlista->first != NULL){
+                Cdllnode* spec = cdllGetspec(cdlista,key,cmp);
                 if(spec != NULL){
                     newnode->data = data;
                     newnode->prev = spec;
-                    Dllnode* next = spec->next;
+                    Cdllnode* next = spec->next;
                     newnode->next = next;
                     spec->next = newnode;
-                    if(next != NULL){
+                    if(next == cdlista->first){
                         next->prev = newnode;
                     }
                     return true;
@@ -193,23 +194,22 @@ int dllInsertafterespec(Dllist* dlista,void* data,void* key, int(*cmp)(void*,voi
     return false;
 }
 
-int dllInsertbeforespec(Dllist* dlista,void* data,void* key,int(*cmp)(void*,void*)){
-    if(dlista != NULL && data != NULL && key != NULL){
-        Dllnode* newnode = (Dllnode*)malloc(sizeof(Dllnode));
+int cdllInsertbeforespec(Cdllist* cdlista,void* data,void* key,int(*cmp)(void*,void*)){
+    if(cdlista != NULL && data != NULL && key != NULL){
+        Cdllnode* newnode = (Cdllnode*)malloc(sizeof(Cdllnode));
         if(newnode != NULL){
-            if(dlista->first != NULL){
-                Dllnode* spec = dllGetspec(dlista,key,cmp);
+            if(cdlista->first != NULL){
+                Cdllnode* spec = cdllGetspec(cdlista,key,cmp);
                 if(spec != NULL){
                     newnode->data = data;
-                    Dllnode* prev = spec->prev;
+                    Cdllnode* prev = spec->prev;
                     newnode->prev = prev;
                     newnode->next = spec;
                     spec->prev = newnode;
-                    if(prev == NULL){
-                        dlista->first = newnode;
-                    }else{
-                        prev->next = newnode;
+                    if(spec == cdlista->first){
+                        cdlista->first = newnode;
                     }
+                    prev->next = newnode;
                     return true;
                 }
             }
@@ -218,10 +218,10 @@ int dllInsertbeforespec(Dllist* dlista,void* data,void* key,int(*cmp)(void*,void
     return false;
 }
 
-void* dllQueryspec(Dllist* dlista, void*key,int(*cmp)(void*,void*)){
-    if(dlista != NULL && key != NULL){
-        if(dlista->first != NULL){
-            Dllnode* atual = dlista->first;
+void* cdllQueryspec(Cdllist* cdlista, void*key,int(*cmp)(void*,void*)){
+    if(cdlista != NULL && key != NULL){
+        if(cdlista->first != NULL){
+            Cdllnode* atual = cdlista->first;
             int stat = cmp(atual->data,key);
             while(stat != true && atual->next != NULL){
                 atual = atual->next;
@@ -235,44 +235,46 @@ void* dllQueryspec(Dllist* dlista, void*key,int(*cmp)(void*,void*)){
     return NULL;
 }
 
-void* dllRemovespec(Dllist* dlista,void* key,int(*cmp)(void*,void*)){
-    if(dlista != NULL && key != NULL){
-        if(dlista->first != NULL){
-        Dllnode* spec = dlista->first;
-        Dllnode* next;
-        Dllnode* prev;
-        void* data;
+void* cdllRemovespec(Cdllist* cdlista,void* key,int(*cmp)(void*,void*)){
+    if(cdlista != NULL && key != NULL){
+        if(cdlista->first != NULL){
+        Cdllnode* prev = cdlista->first;
+        Cdllnode* spec = prev->next;
+        void* salvo;
         int stat = cmp(key,spec->data);
-        while(stat != true && spec->next != NULL){
+        while(stat != true && spec != cdlista->first){
+            prev = spec;
             spec = spec->next;
             stat = cmp(key,spec->data);
         }
         if(stat == true){
-            next = spec->next;
-            prev = spec->prev;
-            data = spec->data;
-            if(next != NULL){
-                next->prev = prev;
-            }
-            if(prev != NULL){
-                prev->next = next;
-            }else{
-                dlista->first = next;
+            Cdllnode* next = spec->next;
+            prev->next = next;
+            next->prev = prev;
+            salvo = spec->data;
+            if(cdlista->first == spec){
+                if(spec->next == spec){
+                    cdlista->first = NULL;
+                }else{
+                    cdlista->first = next;
+                }
             }
             free(spec);
-            return data;
-        }
+            return salvo; 
+        } 
        }
     }
     return NULL;
 }
 
-Dllnode* dllGetspec(Dllist* dlista,void* key,int(*cmp)(void*,void*)){
-    if(dlista != NULL){
-        if(dlista->first != NULL){
-            Dllnode* cur = dlista->first;
+Cdllnode* cdllGetspec(Cdllist* cdlista,void* key,int(*cmp)(void*,void*)){
+    if(cdlista != NULL){
+        if(cdlista->first != NULL){
+            Cdllnode* prev = cdlista->first;
+            Cdllnode* cur = prev->next;
             int stat = cmp(cur->data,key);
-            while(stat != true &&cur->next != NULL){
+            while(stat != true && cur != cdlista->first){
+                prev = cur;
                 cur = cur->next;
                 stat = cmp(key,cur->data);
             }
@@ -285,14 +287,14 @@ Dllnode* dllGetspec(Dllist* dlista,void* key,int(*cmp)(void*,void*)){
 }
 
 
-int dllDestroy (Dllist *dlista){ // destroi apenas listas vazias
-    if(dlista != NULL){
-        if(dlista->first == NULL){
-            free(dlista);
+int cdllDestroy(Cdllist *cdlista){ // destroi apenas listas vazias
+    if(cdlista != NULL){
+        if(cdlista->first == NULL){
+            free(cdlista);
             return true;
         }
     }
     return false;
 }
 
-#endif /* __DLL_C */
+#endif /* __CDLL_C */
