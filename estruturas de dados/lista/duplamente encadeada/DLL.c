@@ -45,7 +45,7 @@ int dllInsertasfist( Dllist *dlista, void *data){
         Dllnode* newnode = (Dllnode*)malloc(sizeof(Dllnode));
         if(newnode != NULL){
             newnode->data = data;
-            newnode->next = dlista->first; // = NULL
+            newnode->next = dlista->first; 
             newnode->prev = NULL;
             if(dlista->first != NULL){
                 dlista->first->prev = newnode;
@@ -102,8 +102,6 @@ void* dllGetnext(Dllist* dlista){
     return NULL;
 }
 
-// os métodos que buscam o ultimo elemento não são muito práticos, pois eles percorrem a dlista inteira para descobrir o ultimo elemento
-
 int dllInsertAsLast(Dllist* dlista,void* data){
     if(dlista != NULL){
         Dllnode* newnode = (Dllnode*)malloc(sizeof(Dllnode));
@@ -113,12 +111,14 @@ int dllInsertAsLast(Dllist* dlista,void* data){
             newnode->next = NULL;
             if(dlista->first == NULL){
                 dlista->first = newnode;
+                newnode->prev = NULL;
             }else{
                 last = dlista->first;
                 while(last->next != NULL){
                     last = last->next;
                 }
                 last->next = newnode;
+                newnode->prev = last;
             }
             return true;
         }
@@ -282,6 +282,24 @@ Dllnode* dllGetspec(Dllist* dlista,void* key,int(*cmp)(void*,void*)){
         }
     }
     return NULL;
+}
+
+int dllDestroyNotEmpty(Dllist *dlista, int (*myfree)(void *)){
+    Dllnode* cur, *prev;
+    if(dlista != NULL){
+        if(dlista->first != NULL){
+            cur = dlista->first;
+            while(cur != NULL ){
+                myfree(cur->data);
+                prev = cur;
+                cur = cur->next;
+                free (prev);
+            }
+        }
+        free(dlista);
+        return true;
+    }
+    return false;
 }
 
 

@@ -77,6 +77,11 @@ Dllnode* dllGetspec(Dllist* dlista,void* key,int(*cmp)(void*,void*));
 Pre-condição: (l foi criada por dllCreate)
 Pos-condição: retorna o spec da função caso exista */
 
+int dllDestroyNotEmpty(Dllist *l, int (*myfree)(void *));
+/* destroy a lista contanto que exista
+Pre-condição: (l foi criada por dllCreate)
+Pos-condição: esvazia e deleta a lista */
+
 int dllDestroy (Dllist *dlista);
 /* destroi a lista
 Pre-condição: (l foi criada por dllCreate) && (não existem itens na lista)
