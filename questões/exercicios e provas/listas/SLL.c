@@ -304,6 +304,8 @@ int sllDestroy (Sllist *lista){
     return false;
 }
 
+// exercicios
+
 int sllEigual(Sllist*l1, Sllist *l2,int(*cmp)( void *, void *)){
     if(l1 != NULL && l2 != NULL){
         if(l1->first != NULL && l2->first != NULL){
@@ -343,7 +345,30 @@ Sllist *sllCopia(Sllist *l1){
     return NULL;
 }
 
-Sllist *sllDiferença(Sllist *l1, Sllist *l2, int(*cmp)(void *, void *)){}
+Sllist *sllDiferença(Sllist *l1, Sllist *l2,int(*cmp)(void *,void *)){
+    if(l1 != NULL && l2 != NULL){
+        if(l1->first != NULL && l2->first != NULL){
+            Sllnode* current1 = l1->first;
+            Sllnode* current2 = l2->first;
+            Sllist* L = sllCreate();
+            if(L != NULL){
+                int igual;
+                while(current1->next != NULL){
+                    while(current2->next != NULL){
+                        igual = cmp(current1->data,current2->data);
+                        if(igual == false){
+                            sllInsertAsLast(L,current1->data);
+                        }
+                        current2 = current2->next;
+                    }
+                    current1 = current1->next;
+                }
+                return L;
+            }
+        }
+    }
+    return NULL;
+}
  
 int sllNumComuns(Sllist *l1, Sllist *l2, int(*cmp)( void *, void *)){
     if(l1 != NULL  && l2 != NULL){
@@ -367,7 +392,40 @@ int sllNumComuns(Sllist *l1, Sllist *l2, int(*cmp)( void *, void *)){
     return -1;
 }
 
-int insereAntesp(Sllist* lista,Sllnode* node,Sllnode* P){}
+int insereAntesp(Sllist* lista,Sllnode* node,Sllnode* P){ // como vou saber o prev do node? pode dar problema
+    if(lista != NULL && node != NULL && P != NULL){
+        if(lista->first != NULL){
+            Sllnode* current = lista->first;
+            Sllnode* prev = NULL;
+            Sllnode* currentN = lista->first;
+            Sllnode* prevN = NULL;
+            while(currentN->next != NULL){
+                if(currentN == node){
+                    break;
+                }
+                prev = currentN;
+                currentN = currentN->next;
+            }
+            while(current->next != NULL){
+                if(current == P){
+                    if(prev == NULL){
+                        lista->first = node;
+                        node->next = P;
+                    }else{
+                        prevN->next = node->next;
+                        prev->next = node;
+                        node ->next = P;
+                    }
+                    return true;
+                }
+                prev = current;
+                current = current->next;  
+            }
+            return false;
+        }
+    }
+    return -1;
+}
 
 int *sllEInversa(Sllist *l1, Sllist *l2, int(*cmp)( void *, void *)){}
 
