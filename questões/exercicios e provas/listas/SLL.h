@@ -128,6 +128,9 @@ int insereAntesp(Sllist* lista,Sllnode* node,Sllnode* P);
 Pre-condição: (l foi criada por sllCreate) && (existem dois elementos na lista)
 Pos-condição: node foi inserido antes de P */ 
 
+// lista - 8
+void* removeK(Sllist* lista,int k);
+
 //lista - 10
 int *sllEInversa(Sllist *l1, Sllist *l2, int(*cmp)( void *, void *)); 
 /* verifica se l1 tem os elementos de l2 na ordem inversa, se tiver = 1, se tiver menos = -1, se tiver mais = 0
@@ -139,6 +142,9 @@ int removeOrdemimp(Sllist* lista);
 /* remove os elementos de ordem impar na lista (1 elm = indice 0, 3 elm = indice 2,...)
 Pre-condição: (l foi criada por sllCreate) && (existem elementos na fila)
 Pos-condição: elementos de ordem impar foram removidos da lista */ 
+
+//2017 - q1
+Sllist* cumulativeSum(Sllist* lista,int k,int(*getvalue)(void*));
 
 
 #endif /* __SLL_H */

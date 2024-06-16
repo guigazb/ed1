@@ -94,7 +94,7 @@ Pos-condição: a lista foi destruida */
 int removeK(Cdllist* cdlista, int k);
 /* destroi a lista
 Pre-condição: (l foi criada por dllCreate) && (não existem itens na lista)
-Pos-condição: a lista foi destruida */
+Pos-condição: a lista foi destruida */ 
 
 //lista - 9
 Cdllist *sllCopiaInvertida (Cdllist *cdlista) ;

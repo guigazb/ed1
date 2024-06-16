@@ -392,7 +392,7 @@ int sllNumComuns(Sllist *l1, Sllist *l2, int(*cmp)( void *, void *)){
     return -1;
 }
 
-int insereAntesp(Sllist* lista,Sllnode* node,Sllnode* P){ // como vou saber o prev do node? pode dar problema
+int insereAntesp(Sllist* lista,Sllnode* node,Sllnode* P){
     if(lista != NULL && node != NULL && P != NULL){
         if(lista->first != NULL){
             Sllnode* current = lista->first;
@@ -403,7 +403,7 @@ int insereAntesp(Sllist* lista,Sllnode* node,Sllnode* P){ // como vou saber o pr
                 if(currentN == node){
                     break;
                 }
-                prev = currentN;
+                prevN = currentN;
                 currentN = currentN->next;
             }
             while(current->next != NULL){
@@ -414,7 +414,7 @@ int insereAntesp(Sllist* lista,Sllnode* node,Sllnode* P){ // como vou saber o pr
                     }else{
                         prevN->next = node->next;
                         prev->next = node;
-                        node ->next = P;
+                        node->next = P;
                     }
                     return true;
                 }
@@ -427,8 +427,62 @@ int insereAntesp(Sllist* lista,Sllnode* node,Sllnode* P){ // como vou saber o pr
     return -1;
 }
 
-int *sllEInversa(Sllist *l1, Sllist *l2, int(*cmp)( void *, void *)){}
+void* removeK(Sllist* lista,int k){
+    if( lista != NULL && k > 0){
+        if(lista->first != NULL){
+            Sllnode* prev = NULL;
+            Sllnode* spec = lista->first;
+            void* salvo;
+            for(int i = 0; i < k; i++){
+                prev = spec;
+                spec = spec->next;
+            }
+            prev-> next = spec->next;
+            salvo = spec->data;
+            free(spec);
+            return salvo;
+        }
+    }
+    return NULL;
+}
+
+int *sllEInversa(Sllist *l1, Sllist *l2, int(*cmp)( void *, void *)){} // poggers?
 
 int removeOrdemimp(Sllist* lista){}
+
+Sllist* cumulativeSum(Sllist* lista,int k,int(*getvalue)(void*)){
+    if(lista != NULL && k > 0){
+        if(lista->first != NULL){
+            Sllist* l2 = sllCreate();
+            Sllnode* cur2 = lista->first;
+            int i = 0;
+            while(cur2->next != NULL){
+                sllInsertAsLast(l2,cur2->data);
+                cur2 = cur2->next;
+            }
+
+            cur2 = l2->first;
+            Sllnode* cur1 = lista->first;
+            int sum = 0;
+            while(cur1->next != NULL && i < k){
+                sum += getvalue(cur1);
+                cur1 = cur1->next;
+                i++;
+            }
+            
+            int j = 1;
+            while(cur2->next != NULL){
+                if(j == k){
+                    cur2->data = sum;
+                    return l2;
+                }else{
+                    cur2 = cur2->next;
+                    j++;
+                }
+            }
+        }
+    }
+    return NULL;
+}
 
 #endif /* __SLL_C */
