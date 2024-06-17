@@ -448,7 +448,28 @@ void* removeK(Sllist* lista,int k){
 
 int *sllEInversa(Sllist *l1, Sllist *l2, int(*cmp)( void *, void *)){} // poggers?
 
-int removeOrdemimp(Sllist* lista){}
+int removeOrdemimp(Sllist* lista){
+    if(lista != NULL){
+        if(lista->first != NULL){
+            Sllnode* cur = lista->first;
+            Sllnode* prev = NULL;
+            Sllnode* next = NULL;
+            while(cur != NULL){
+                next = cur->next;
+                if(prev == NULL){
+                    lista->first = next;
+                    prev = lista->first->next;
+                }else{
+                    prev->next = next;
+                    prev = prev->next->next;
+                }
+                cur = next->next;
+            }
+            return true;
+        }
+    }
+    return false;
+}
 
 Sllist* cumulativeSum(Sllist* lista,int k,int(*getvalue)(void*)){
     if(lista != NULL && k > 0){
@@ -469,7 +490,7 @@ Sllist* cumulativeSum(Sllist* lista,int k,int(*getvalue)(void*)){
                 cur1 = cur1->next;
                 i++;
             }
-            
+
             int j = 1;
             while(cur2->next != NULL){
                 if(j == k){

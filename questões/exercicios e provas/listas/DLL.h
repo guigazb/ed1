@@ -79,6 +79,17 @@ void* removeK(Dllist* lista,int k);
 // lista - 10
 int *dllEInversa(Dllist* l1, Dllist* l2, int(*cmp)( void *, void *));
 
+// lista - 11
+int removeOrdemimp(Dllist* lista);
+
+// prova 2022.1 - 2
+void  PegaElementosIguais(Dllist *l1, Dllist *l2, Dllist *l3);
+/* Escreva um algoritmo que recebe três listas lineares duplamente encadeadas L1, 
+L2 e L3. E, retorna a Lista L3 com os nós de L1 que estão que tem um igual em L2 
+(data), ou seja que estão presentes em ambas as listas (L1 e L2). Não pode alocar novos 
+nós. L3 é recebida pelo algoritmo sem nenhum nó (vazia). Os elementos incluídos em 
+L3 devem ser retirados da lista L1. */
+
 //2017 - q2
 int trocaIJ(Dllist* lista,int i, int j);
 

@@ -305,7 +305,11 @@ int removeK(Cdllist* cdlista, int k){
     if(cdlista != NULL){}
 }
 
-Cdllist *sllCopiaInvertida (Cdllist *cdlista){
+int sllNumComuns(Cdllist *l1, Cdllist *l2, int(*cmp)( void *, void *)){}
+
+int *sllEInversa(Cdllist *l1, Cdllist *l2, int(*cmp)( void *, void *)){}
+
+Cdllist* sllCopiaInvertida(Cdllist *cdlista){
     if(cdlista != NULL){}
 }
 

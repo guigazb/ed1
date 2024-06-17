@@ -90,11 +90,18 @@ int removedpsspec(Cdllist* cdlista, Cdllnode*p);
 Pre-condição: (l foi criada por dllCreate) && (não existem itens na lista)
 Pos-condição: a lista foi destruida */
 
-// lista - 8
+// lista - 8 
+// prova 2021.2 - 1
 int removeK(Cdllist* cdlista, int k);
 /* destroi a lista
 Pre-condição: (l foi criada por dllCreate) && (não existem itens na lista)
 Pos-condição: a lista foi destruida */ 
+
+//prova 2021.2 - 2
+int sllNumComuns(Cdllist *l1, Cdllist *l2, int(*cmp)( void *, void *));
+
+// prova 2022.1 - 1
+int *sllEInversa(Cdllist *l1, Cdllist *l2, int(*cmp)( void *, void *));
 
 //lista - 9
 Cdllist *sllCopiaInvertida (Cdllist *cdlista) ;

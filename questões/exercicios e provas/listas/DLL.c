@@ -282,16 +282,71 @@ int *dllEInversa(Dllist *l1, Dllist *l2, int(*cmp)( void *, void *)){
     return -1;
 }
 
+int removeOrdemimp(Dllist* lista){
+    if(lista != NULL){
+        if(lista->first != NULL){
+            Dllnode* cur = lista->first;
+            Dllnode* next = NULL;
+            Dllnode* prev = NULL;
+            while(cur != NULL){
+                next = cur->next;
+                prev = cur->prev;
+                if(prev == NULL){
+                    lista->first = next;
+                }else{
+                    prev->next = next;
+                }
+                if(next != NULL){
+                    next->prev = prev;
+                }
+                cur = next->next;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+void  PegaElementosIguais(Dllist *l1, Dllist *l2, Dllist *l3){
+    if(l1 != NULL && l2 != NULL && l3 != NULL){
+        if(l1->first != NULL && l2->first != NULL){
+            Dllnode* cur1 = l1->first;
+            Dllnode* cur2 = l2->first;
+            Dllnode* prev1 = NULL;
+            Dllnode* prev2 = NULL;
+            Dllnode* next1 = cur1->next;
+            Dllnode* next2 = cur2->next;
+            while(cur1->next != NULL){
+                while(cur2->next != NULL){
+                    if(next1 == next2){
+                        if(l3->first == NULL){
+                            l3->first = cur1; // consertar os prevs, nexts, deixar a lógica no pique
+
+                        }
+                    }
+                    prev2 = cur2;
+                    cur2 = cur2->next;
+                    
+                }
+            }
+        }
+    }
+}
+
 int trocaIJ(Dllist* lista,int i, int j){
     if(lista != NULL && i != 0 && j != 0){
         if(lista->first != NULL){
             Dllnode* cur1 = lista->first;
             Dllnode* cur2 = lista->first;
-            for(int k = 0; k < i;k++){
+            int k = 0;
+            int l = 0;
+            while(cur1->next != NULL && k < i){
                 cur1 = cur1->next;
+                k++;
             }
-            for(int l = 0; l < j;l++){
+            while(cur2->next != NULL && l < j){
                 cur2 = cur2->next;
+                l++;
             }
             if(cur1 != NULL && cur2 != NULL){
                 Dllnode* prev1 = cur1->prev;
