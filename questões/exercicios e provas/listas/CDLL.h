@@ -105,9 +105,16 @@ int *sllEInversa(Cdllist *l1, Cdllist *l2, int(*cmp)( void *, void *));
 
 //lista - 9
 Cdllist *sllCopiaInvertida (Cdllist *cdlista) ;
-/* destroi a lista
-Pre-condição: (l foi criada por dllCreate) && (não existem itens na lista)
-Pos-condição: a lista foi destruida */
+/* Escreva um algoritmo copia (L1, L2) para  montar uma cópia  L2 da lista L1 (ambas 
+duplamente encadeada circular), de modo que os elementos de L2 estejam em L1 na 
+ordem inversa. */
 
+// provas sem data
+int removeocaraevizinhos(Cdllist* cdlista,void* key,int(*cmp)(void*,void*));
+
+int cdllemsll(Cdllist* cdlista);
+
+//2023.2 - q1
+void* removeDomeio(Cdllist* cdlista);
 
 #endif /* __CDLL_H */

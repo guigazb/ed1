@@ -298,11 +298,50 @@ int cdllDestroy(Cdllist *cdlista){ // destroi apenas listas vazias
 }
 
 int removedpsspec(Cdllist* cdlista, Cdllnode*p){
-    if(cdlista != NULL){}
+    if(cdlista != NULL){
+        if(cdlista->first != NULL){
+            Cdllnode* prev = cdlista->first;
+            Cdllnode* spec = prev->next;
+            while(spec != cdlista->first && spec != p){
+                prev = spec;
+                spec = spec->next;
+            }
+            if(spec == p){
+                Cdllnode* next = spec->next;
+                if(next != NULL){
+                    spec->next = next->next;
+                    next->next->prev = spec;
+                    free(next);
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+    return -1;
 }
 
-int removeK(Cdllist* cdlista, int k){
-    if(cdlista != NULL){}
+int removeK(Cdllist* cdlista, int k){ // averiguar
+    if(cdlista != NULL && k > 0){
+        if(cdlista->first != NULL){
+            Cdllnode* prev = cdlista->first;
+            Cdllnode* spec = prev->next;
+            int i = 2;
+            while(spec != cdlista->first){
+                if(i == k){
+                    spec->prev->next = spec->next;
+                    spec->next->prev = spec->prev;
+                    free(spec);
+                    return true;
+                }else{
+                    prev = spec;
+                    spec = spec->next;
+                    i++;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 int sllNumComuns(Cdllist *l1, Cdllist *l2, int(*cmp)( void *, void *)){}
@@ -310,7 +349,62 @@ int sllNumComuns(Cdllist *l1, Cdllist *l2, int(*cmp)( void *, void *)){}
 int *sllEInversa(Cdllist *l1, Cdllist *l2, int(*cmp)( void *, void *)){}
 
 Cdllist* sllCopiaInvertida(Cdllist *cdlista){
-    if(cdlista != NULL){}
+    if(cdlista != NULL){
+        if(cdlista->first != NULL){}
+    }
+}
+
+int removeocaraevizinhos(Cdllist* cdlista,void* key,int(*cmp)(void*,void*)){}
+
+int cdllemsll(Cdllist* cdlista){
+    if(cdlista != NULL){
+        if(cdlista->first != NULL){
+            Cdllnode* prev = cdlista->first;
+            prev->prev = NULL;
+            Cdllnode* spec = prev->next;
+            while(spec != cdlista->first ){
+                spec->prev = NULL;
+                prev = spec;
+                spec = spec->next;
+                if(spec->next == cdlista->first){
+                    spec->next = NULL;
+                }
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+void* removeDomeio(Cdllist* cdlista){ // averiguar
+    if(cdlista != NULL){
+        if(cdlista->first != NULL){
+            int meio = 0;
+            if(cdllNumNodes(cdlista) % 2 == 0){
+                meio = cdllNumNodes(cdlista) / 2;
+            }else{
+                meio = (int)(cdllNumNodes(cdlista) / 2) + 1;
+            }
+            Cdllnode* prev = cdlista->first;
+            Cdllnode* spec = prev->next;
+            void* salvo;
+            int i = 2;
+            while(spec != cdlista->first){
+                if(i == meio){
+                    spec->prev->next = spec->next;
+                    spec->next->prev = spec->prev;
+                    salvo = spec->data;
+                    free(spec);
+                    return salvo;
+                }else{
+                    prev = spec;
+                    spec = spec->next;
+                    i++;
+                }
+            }
+        }
+    }
+    return NULL;
 }
 
 #endif /* __CDLL_C */
