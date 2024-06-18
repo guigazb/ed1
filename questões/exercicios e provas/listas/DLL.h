@@ -93,6 +93,10 @@ L3 devem ser retirados da lista L1. */
 //2017 - q2
 int trocaIJ(Dllist* lista,int i, int j);
 
+// provas desconhecidas
+
+int dllFixprev(Dllist* dlista);
+
 int dllDestroy (Dllist* dlista);
 /* destroi a lista
 Pre-condição: (l foi criada por dllCreate) && (não existem itens na lista)

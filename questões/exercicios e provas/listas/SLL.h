@@ -146,5 +146,9 @@ Pos-condição: elementos de ordem impar foram removidos da lista */
 //2017 - q1
 Sllist* cumulativeSum(Sllist* lista,int k,int(*getvalue)(void*));
 
+// provas misteriosas
+
+int sllqueuepromovelast(Sllist* lista,int n);
+
 
 #endif /* __SLL_H */

@@ -354,7 +354,53 @@ Cdllist* sllCopiaInvertida(Cdllist *cdlista){
     }
 }
 
-int removeocaraevizinhos(Cdllist* cdlista,void* key,int(*cmp)(void*,void*)){}
+int removeocaraevizinhos(Cdllist* cdlista,void* key,int(*cmp)(void*,void*)){
+    if(cdlista != NULL && key != NULL){
+        if(cdlista->first != NULL){
+            Cdllnode* prev = cdlista->first;
+            Cdllnode* spec = prev->next;
+            int stat = cmp(spec->data,key);
+            while(stat != true && spec != cdlista->first){
+                prev = spec;
+                spec = spec->next;
+                stat = cmp(spec->data,key);
+            }
+            if(stat == true){
+                prev = prev->prev;
+                Cdllnode* next = spec->next->next;
+                if(prev != cdlista->first->prev && next!= cdlista->first){
+                    if(next->next == prev){
+                        cdlista->first = next;
+                        prev->next = next;
+                    }else{
+                        prev->next = next;
+                        next->prev = prev;
+                    } 
+                }else if(prev == next){
+                    cdlista->first = prev;
+                    prev->next = prev;
+                    prev->prev = prev;
+
+                }else if(next == cdlista->first && next->next == prev){
+                    prev->next = next;
+                }else if(prev == cdlista->first->prev && next->next == prev){
+                    cdlista->first = next;
+                    prev->next = next;
+                }else{
+                    cdlista->first == NULL;
+                }
+                Cdllnode* remov1 = spec->prev;
+                Cdllnode* remov2 = spec->next;
+                free(remov1);
+                free(remov2);
+                free(spec);
+                return true;
+            }
+            return false;
+        }
+    }
+    return -1;
+}
 
 int cdllemsll(Cdllist* cdlista){
     if(cdlista != NULL){

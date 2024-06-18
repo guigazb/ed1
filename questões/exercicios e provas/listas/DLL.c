@@ -389,6 +389,22 @@ int trocaIJ(Dllist* lista,int i, int j){
     return -1;
 }
 
+int dllFixprev(Dllist* dlista){
+    if(dlista != NULL){
+        if(dlista->first != NULL){
+            Dllnode* prev = NULL;
+            Dllnode* cur = dlista->first;
+            while(cur->next != NULL){
+                prev = cur;
+                cur = cur->next;
+                cur->prev = prev;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
 
 int dllDestroy (Dllist *dlista){ // destroi apenas listas vazias
     if(dlista != NULL){
