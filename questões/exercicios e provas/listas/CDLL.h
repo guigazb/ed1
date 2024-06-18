@@ -114,6 +114,8 @@ int removeocaraevizinhos(Cdllist* cdlista,void* key,int(*cmp)(void*,void*));
 
 int cdllemsll(Cdllist* cdlista);
 
+int cdllFixprev(Cdllist* cdlista);
+
 //2023.2 - q1
 void* removeDomeio(Cdllist* cdlista);
 

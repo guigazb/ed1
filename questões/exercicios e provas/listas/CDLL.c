@@ -350,8 +350,22 @@ int *sllEInversa(Cdllist *l1, Cdllist *l2, int(*cmp)( void *, void *)){}
 
 Cdllist* sllCopiaInvertida(Cdllist *cdlista){
     if(cdlista != NULL){
-        if(cdlista->first != NULL){}
+        if(cdlista->first != NULL){
+            Cdllnode* prev = cdlista->first;
+            Cdllnode* cur = prev->next;
+            while(cur != cdlista->first){
+                prev = cur;
+                cur = cur->next;
+            }
+            Cdllist* l2 = CdllCreate();
+            while(cur != cdlista->first->next){
+                CdllInsertAsLast(l2,cur->data);
+                cur = cur->prev;
+            }
+            return l2;
+        }
     }
+    return NULL;
 }
 
 int removeocaraevizinhos(Cdllist* cdlista,void* key,int(*cmp)(void*,void*)){
@@ -416,6 +430,23 @@ int cdllemsll(Cdllist* cdlista){
                     spec->next = NULL;
                 }
             }
+            return true;
+        }
+    }
+    return false;
+}
+
+int cdllFixprev(Cdllist* cdlista){
+    if(cdlista != NULL){
+        if(cdlista->first != NULL){
+            Cdllnode* prev = NULL;
+            Cdllnode* cur = cdlista->first;
+            while(cur->next != NULL){
+                prev = cur;
+                cur = cur->next;
+                cur->prev = prev;
+            }
+            cdlista->first->prev = cur;
             return true;
         }
     }

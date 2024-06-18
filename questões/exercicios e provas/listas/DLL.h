@@ -98,6 +98,10 @@ int trocaIJ(Dllist* lista,int i, int j);
 int dllFixprev(Dllist* dlista);
 
 int dllDestroy (Dllist* dlista);
+
+int inverte(Dllist* l1,Dllist* l2);
+// retorna os elms de l1 em l2 na ordem inversa
+
 /* destroi a lista
 Pre-condição: (l foi criada por dllCreate) && (não existem itens na lista)
 Pos-condição: a lista foi destruida */

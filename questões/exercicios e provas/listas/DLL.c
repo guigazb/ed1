@@ -405,6 +405,37 @@ int dllFixprev(Dllist* dlista){
     return false;
 }
 
+int inverte(Dllist* l1,Dllist* l2){
+    if(l1 != NULL && l2 != NULL){
+        if(l1->first != NULL){
+            Dllnode*cur = l1->first;
+            while(cur->next != NULL){
+                cur = cur->next;
+            }
+            Dllnode* cur2 = NULL;
+            while(cur->prev != NULL){
+                if(l2->first == NULL){
+                    l2->first = cur;
+                    cur2 = l2->first;
+                }else{
+                    cur2->next = cur;
+                    cur2 = cur2->next;
+                }
+                cur = cur->prev;
+            }
+            Dllnode*conserta = l2->first;
+            Dllnode* prev = NULL;
+            while(conserta->next != NULL){
+                prev = conserta;
+                conserta = conserta->next;
+                conserta->prev = prev;
+            }
+            return true;
+        }
+        return false;
+    }
+    return -1;
+}
 
 int dllDestroy (Dllist *dlista){ // destroi apenas listas vazias
     if(dlista != NULL){

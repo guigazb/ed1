@@ -150,5 +150,7 @@ Sllist* cumulativeSum(Sllist* lista,int k,int(*getvalue)(void*));
 
 int sllqueuepromovelast(Sllist* lista,int n);
 
+int sllqueuepromovelastpunefirst(Sllist* lista,int n);
+
 
 #endif /* __SLL_H */

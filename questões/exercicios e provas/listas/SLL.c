@@ -544,4 +544,47 @@ int sllqueuepromovelast(Sllist* lista,int n){ // promove last em n posições
     return false;
 }
 
+int sllqueuepromovelastpunefirst(Sllist* lista,int n){ // promove last em n posições e pune first em uma casa
+    if(lista != NULL && n > 0){
+        if(lista->first != NULL){
+            Sllnode* primeiro = lista->first;
+            primeiro->next = primeiro->next->next;
+            lista->first = primeiro->next;
+            lista->first->next = primeiro;
+            
+            Sllnode* prev = NULL;
+            Sllnode* cur = lista->first;
+            while(cur->next != NULL){
+                prev = cur;
+                cur = cur->next;
+            }
+            prev->next = NULL;
+            Sllnode* prev2 = lista->first;
+            Sllnode* next = NULL;
+            for(int i = 0; i < n; i++){
+                while(prev2->next != prev){
+                    prev2 = prev2->next;
+                }
+                prev = prev2;
+                prev2 = lista->first;
+                if(prev == lista->first && i < n){
+                    prev = NULL;
+                    break;
+                }
+            }
+            if(prev == NULL){
+                next = lista->first->next;
+                lista->first = cur;
+                cur->next = next;
+            }else{
+                next = prev->next->next;
+                prev->next = cur;
+                cur->next = next;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
 #endif /* __SLL_C */
