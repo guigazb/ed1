@@ -446,7 +446,48 @@ void* removeK(Sllist* lista,int k){
     return NULL;
 }
 
-int *sllEInversa(Sllist *l1, Sllist *l2, int(*cmp)( void *, void *)){} // poggers?
+int *sllEInversa(Sllist *l1, Sllist *l2, int(*cmp)( void *, void *)){
+    if(l1 != NULL && l2 != NULL){
+        if(l1->first != NULL && l2->first != NULL){
+            Sllnode* cur1 = l1->first;
+            Sllnode* cur2 = l2->first;
+            Sllnode* prev = NULL;
+            while(cur2->next != NULL){
+                prev = cur2;
+                cur2 = cur2->next;
+            }
+            int stat = cmp(cur1->data,cur2->data);
+            Sllnode* prev2 = NULL;
+            while(stat == true && cur1 != NULL && cur2 != NULL){
+                cur1 = cur1->next;
+                cur2 = prev;
+                if(cur1 != NULL && cur2 != NULL){
+                    stat = cmp(cur1->data,cur2->data);
+                    prev2 = l2->first;
+                    while(prev2->next != prev){
+                        prev2 = prev2->next;
+                    }
+                    prev = prev2;
+                }else{
+                    stat = false;
+                }
+            }
+            
+            if(SllNumNodes(l1) < SllNumNodes(l2)){
+                return -1;
+            }else{
+                return -2;
+            }
+
+            if(cur1 != NULL && cur2 != NULL){
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+    }
+} // poggers?
 
 int removeOrdemimp(Sllist* lista){
     if(lista != NULL){

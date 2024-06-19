@@ -93,6 +93,9 @@ L3 devem ser retirados da lista L1. */
 //2017 - q2
 int trocaIJ(Dllist* lista,int i, int j);
 
+//2023.2 - q4
+Dllist* movemenoresl2paral1(Dllist* l1,Dllist* l2,void* key,int(*cmp)(void*,void*));
+
 // provas desconhecidas
 
 int dllFixprev(Dllist* dlista);
@@ -101,6 +104,10 @@ int dllDestroy (Dllist* dlista);
 
 int inverte(Dllist* l1,Dllist* l2);
 // retorna os elms de l1 em l2 na ordem inversa
+
+int dllquebracomuns(Dllist* l1,Dllist* l2);
+
+void dllPegaIguais(Dllist*l1, Dllist*l2, Dllist*l3);
 
 /* destroi a lista
 Pre-condição: (l foi criada por dllCreate) && (não existem itens na lista)

@@ -437,6 +437,100 @@ int inverte(Dllist* l1,Dllist* l2){
     return -1;
 }
 
+Dllist* movemenoresl2paral1(Dllist* l1,Dllist* l2,void* key,int(*cmp)(void*,void*)){
+    if(l1 != NULL && l2 != NULL){
+        if(l2->first != NULL){
+            Dllnode* spec = l2->first;
+            int stat;
+            Dllnode* last = NULL;
+            while(spec->next != NULL){
+                stat = cmp(spec->data,key);
+                if(stat == -1){
+                    spec->prev->next = spec->next;
+                    spec->next->prev = spec->prev;
+                    if(l1->first == NULL){
+                        l1->first = spec;
+                        spec->prev = NULL;
+                    }else{
+                        last = l1->first;
+                        while(last->next != NULL){
+                            last = last->next;
+                        }
+                        last->next = spec;
+                        spec->prev = last;
+                    }
+                }
+                spec = spec->next;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+int dllquebracomuns(Dllist* l1,Dllist* l2){
+    if(l1 != NULL && l2 != NULL){
+        if(l1->first != NULL && l2->first != NULL){
+            Dllnode* cur1 = l1->first;
+            Dllnode* cur2 = l2->first;
+            Dllnode* comum = NULL;
+            while(cur1->next != NULL){
+                while(cur2->next != NULL){
+                    if(cur1->next == cur2->next){
+                        comum = cur1->next;
+                        cur1->next = comum->next;
+                        comum->next->prev = cur1;
+                        comum->prev = cur2;
+                        comum->next = NULL;
+                    }else{
+                        cur2 = cur2->next;
+                    }
+                }
+                cur1 = cur1->next;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+void dllPegaIguais(Dllist*l1, Dllist*l2, Dllist*l3){
+    if(l1 != NULL && l2 != NULL && l3 != NULL){
+        if(l1->first != NULL && l2->first != NULL){
+            Dllnode* cur1 = l1->first;
+            Dllnode* cur2 = l2->first;
+            Dllnode* cur3 = NULL;
+            Dllnode* comum = NULL;
+            while(cur1->next != NULL){
+                while(cur2->next != NULL){
+                    if(cur1->next == cur2->next){
+                        comum = cur1->next;
+                        cur1->next = comum->next;
+                        comum->next->prev = cur1;
+                        cur2->next = cur2->next->next;
+                        cur2->next->prev = cur2;
+                        comum->next = NULL;
+                        if(l3->first == NULL){
+                            l3->first = comum;
+                            comum->prev = NULL;
+                        }else{
+                            cur3 = l3->first;
+                            while(cur3->next != NULL){
+                                cur3 = cur3->next;
+                            }
+                            cur3->next = comum;
+                            comum->prev = cur3;
+                        }
+                    }else{
+                        cur2 = cur2->next;
+                    }
+                }
+                cur1 = cur1->next;
+            }
+        }
+    } 
+}
+
 int dllDestroy (Dllist *dlista){ // destroi apenas listas vazias
     if(dlista != NULL){
         if(dlista->first == NULL){
@@ -445,6 +539,20 @@ int dllDestroy (Dllist *dlista){ // destroi apenas listas vazias
         }
     }
     return false;
+}
+
+Dllnode* cur1 = l1->first;
+Dllnode* cur2 = l2->first;
+int stat = cmp(cur1->data,cur2->data);
+while(cur1->next != NULL && stat != true){
+    while(cur2->next != NULL){
+        cur2 = cur2->next;
+        stat = cmp(cur1->data,cur2->data);
+        if(stat == true){
+            //remove o elemento em comum
+        }
+    }
+    cur1 = cur1->next;
 }
 
 #endif /* __DLL_C */
