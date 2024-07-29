@@ -186,7 +186,63 @@ int abpEspelhada (Tnode* t1, Tnode* t2,int(*cmp)(void *, void *)){
     }
 }
 
-int abpDestroy (Tnode *tree){
+Tnode *abpRemoveMaior( Tnode *t, int (*cmp)( void *, void * ), void **data ){
+    if ( t != NULL ){    
+        void *data2;
+        Tnode *aux;
+        if ( t->r != NULL ){
+            t->r = abpRemoveMaior( t->r, cmp, &data2 );
+            return t;
+        } else {
+            if ( t->l != NULL ){
+                aux = t->l;
+                *data = t->data;
+                free( t );
+                return aux;
+            } else {
+                *data = t->data;
+                free( t );
+                return NULL;
+            }
+        }
+    }
+    *data = NULL;
+    return NULL;
+}
+
+Tnode *abpRemoveMenor(Tnode *t, int (*cmp)( void *, void * ), void **data ){
+    if ( t != NULL ){    
+        void *data2;
+        Tnode *aux;
+        if ( t->l != NULL ){
+            t->l = abpRemoveMaior( t->l, cmp, &data2 );
+            return t;
+        } else {
+            if ( t->r != NULL ){
+                aux = t->r;
+                *data = t->data;
+                free( t );
+                return aux;
+            } else {
+                *data = t->data;
+                free( t );
+                return NULL;
+            }
+        }
+    }
+    *data = NULL;
+    return NULL;
+}
+
+void* getData(Tnode* tree){
+    if(tree != NULL){
+        return tree->data;
+    }else{
+        return NULL;
+    }
+}
+
+int abpDestroy(Tnode *tree){
     if(tree != NULL){
         if(tree->l == NULL && tree->r == NULL && tree->data == NULL){
             free(tree);

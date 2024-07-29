@@ -40,6 +40,12 @@ void*abpmaiordata(Tnode* tree);
 
 int abpEspelhada (Tnode* t1, Tnode* t2,int(*cmp)(void *, void *));
 
+Tnode *abpRemoveMaior(Tnode *t, int (*cmp)( void *, void * ), void **data );
+
+Tnode *abpRemoveMenor(Tnode *t, int (*cmp)( void *, void * ), void **data );
+
+void* getData(Tnode* tree);
+
 int abpDestroy(Tnode *tree);
 /* destroi a árvore
 Pre-condição: (chamar a função treeCreate)
