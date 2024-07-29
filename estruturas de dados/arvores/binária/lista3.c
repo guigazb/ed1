@@ -71,26 +71,50 @@ int abnNos(Tnode* tree){ // visitação simetrica, qualquer visitação pode ser
     return 0;
 }
 
-Tnode* abpremovemenor(Tnode* tree){
+Tnode* abpremovemenor(Tnode* tree,void**data){
+    void* data2;
+    Tnode* aux;
     if(tree != NULL){
         if(tree->l != NULL){
-            return abpremovemenor(tree->l);
+            tree->l = abpremovemenor(tree->l,&data2);
+            return tree;
         }else{
-            //remove o menor - se é menor não tem filho esquerdo
+            *data = tree->data;
+            if(tree->r != NULL){
+                aux = tree->r;
+                free(tree);
+                return aux;
+            }else{
+                free(tree);
+                return NULL;
+            }
         }
     }else{
+        *data = NULL;
         return NULL;
     }
 }
 
-Tnode* abpremovemaior(Tnode* tree){
+Tnode* abpremovemaior(Tnode* tree,void**data){
+    void* data2;
+    Tnode* aux;
     if(tree != NULL){
         if(tree->r != NULL){
-            return abpremovemaior(tree->r);
+            tree->r = abpremovemaior(tree->r,&data2);
+            return tree;
         }else{
-            //remove o maior - se é maior não tem filho direito
+            *data = tree->data;
+            if(tree->l != NULL){
+                aux = tree->l;
+                free(tree);
+                return aux;
+            }else{
+                free(tree);
+                return NULL;
+            }
         }
     }else{
+        *data = NULL;
         return NULL;
     }
 }
